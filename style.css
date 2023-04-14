@@ -37,31 +37,107 @@ main {
     overflow: hidden;
     background: var(--light-blue);
 }
-
+* button,
+.clickable {
+    cursor: pointer;
+}
+.toggle-1 {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    right: 5%;
+}
 .menu {
     width: 50%;
     height: 50%;
-    background-color: orange;
     display: flex;
     align-items: center;
     padding: 0;
     justify-content: space-between;
 }
 
+.menu .text {
+    position: absolute;
+    left: 37%;
+    top: 20%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: all 500ms ease-in-out;
+}
+
 .menu .right-side,
 .menu .left-side {
     display: inherit;
     flex-direction: column;
-    gap: 10vh;
-    background-color: red;
+    gap: 15vh;
 }
 
-
-
-.menu button {
+.menu button:not(.start-btn) {
     width: 10vw;
     height: 10vh;
+    min-height: fit-content;
+    min-width: min-content;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+    transition: all 200ms ease-in-out;
 }
+
+.menu button:not(.start-btn):hover {
+    transform: scale(1.2);
+}
+
+.menu button:not(.start-btn):active {
+    transform: scale(0.95);
+}
+
+.menu button:not(.start-btn):checked {
+    background-color: orange;
+}
+
+.menu .start-btn {
+    width: 15vw;
+    height: 15vh;
+    border: 3px solid black;
+    border-radius: 5px;
+    box-shadow: rgb(0, 0, 0) 0px 0px 0px 2px,
+     rgb(252, 252, 252) 0px 0px 0px 4px,
+      rgb(0, 0, 0) 0px 0px 0px 6px;
+
+}
+.menu .start-btn:hover {
+    animation: hoverAnimation 1s infinite;
+}
+
+.menu .start-btn:active {
+    background-color: black;
+    transform: scale(0.95);
+    animation: none;
+}
+
+@keyframes hoverAnimation {
+    0% {
+        transform: scale(1);
+        box-shadow: rgb(255, 254, 254) 0px 0px 0px 2px,
+     rgb(0, 0, 0) 0px 0px 0px 4px,
+      rgb(255, 253, 253) 0px 0px 0px 6px;
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px 2px,
+     rgb(252, 252, 252) 0px 0px 0px 4px,
+      rgb(0, 0, 0) 0px 0px 0px 6px;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: rgb(255, 254, 254) 0px 0px 0px 2px,
+     rgb(0, 0, 0) 0px 0px 0px 4px,
+      rgb(255, 253, 253) 0px 0px 0px 6px;
+    }
+}
+
+
 
 footer {
     position: absolute;

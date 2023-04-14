@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="style.css">
-    <script scr="script.js" defer></script>
+    <script type='module' src="script.js" defer></script>
 </head>
 <body>
-
+    <button class="toggle-1" onClick=toggle()>TOGGLE</button>
     <main>
         <div class="menu">
-            
+            <div class="text">Choose your destiny...</div>
             <div class="left-side">
                 <button class="player-btn" id="1">Player</button>
                 <button class="robot-btn" id="2">Bot</button>
@@ -23,7 +23,7 @@
 
             <div class="right-side">
                 <button class="player-btn" id="3">Player</button>
-                <button class="robot-btn" id="4">Bot</button>
+                <button class="robot-btn" id="4">Bot   </button>
 
             </div>
 
@@ -32,7 +32,7 @@
             <img src="images/robot.svg" class="icon left" alt="">
             <img src="images/et.svg" class="icon right" alt="">
             <img src="images/robot.svg" class="icon right" alt="">
-            
+
         </div>
 
     </main>
