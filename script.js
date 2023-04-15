@@ -1,27 +1,41 @@
-import { Game } from './Game.js';
 
 
 
 
+const testBtn = document.querySelector('.test-btn')
+testBtn.addEventListener('click', (e) => test());
+function test() {
+    const ttt = document.querySelector('.ttt-text');
+    toggleActive(ttt);
+}
 
-const g = new Game(window);
-
-g.changeText(2, 'lala');
-
-const element = window.document.getElementById('1');
-
-
-
-
-function toggle() {
-    const cls = 'text'
-    const text = document.querySelector(`.${cls}`);
-    if (text.classList.contains('active')) {
-        text.classList.remove('active');
-        text.classList.add('inactive');
+function toggleActive(element) {
+    const clsList = element.classList;
+    if (clsList.contains('inactive') && clsList.contains('active')) {
+        return
+        //element.classList.remove('inactive');
+        //element.classList.remove('active');
     } else {
-        text.classList.remove('inactive');
-        text.classList.add('active');
+    if (clsList.contains('inactive')) {
+        element.classList.remove('inactive');
+        element.classList.add('active');
+    } else {
+        element.classList.remove('active');
+        element.classList.add('inactive');
     }
+    }
+}
 
+
+function removeClass(element, cls) {
+    if (!typeof element == HTMLElement || !typeof  cls=='string') return
+
+    if (element.classList.contains(cls)) element.classList.remove(cls);
+}
+
+function addClass(element, cls) {
+    if (!typeof element == HTMLElement || !typeof cls == 'string') return
+
+    if (!element.classList.contains(cls)) element.classList.add(cls);
+    console.log(element.classList)
 }

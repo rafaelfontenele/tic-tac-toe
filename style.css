@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;0,300;0,500;1,600&family=Orbitron:wght@400;500;600;700;800;900&family=Press+Start+2P&family=Roboto+Slab:wght@100;300;500&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+/*
+
+font-family: 'Kanit', sans-serif;
+font-family: 'Orbitron', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Roboto Slab', serif;
+
+*/
 
 :root {
     --light-blue: rgba(25, 146, 212, 1);
@@ -9,8 +19,9 @@
     --red: #ff7070;
     --light-green: #9fff9c;
     --light-red: #ff9c9c;
-
+    --tiktaktoe-font: 'Orbitron', sans-serif;
 }
+
 
 
 * {
@@ -37,6 +48,44 @@ main {
     overflow: hidden;
     background: var(--light-blue);
 }
+
+.ttt-text {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 15px;
+    padding: 2vh 3vh;
+    pointer-events: none;
+}
+
+.ttt-text span + active {
+    animation: ttt 1000ms linear;
+    color: orange;
+}
+
+@keyframes ttt {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+        color: orange;
+    }
+}
+
+.ttt-text span  {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 600;
+}
+
+.ttt-text span:not(:nth-child(1)):before {
+    content: '-';
+}
+
+
 * button,
 .clickable {
     cursor: pointer;

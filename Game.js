@@ -1,16 +1,14 @@
 
 
-const Game = function(window) {
-    
-    const test = (text) => this.call(window, alert(`aa`))
+const Game = (window) => {
 
     const changeText = (id,newText) => {
-        const element = window.document.getElementById(toString(id));
+        const element = window.document.getElementById(id);
+        window.alert(element.textContent);
         element.textContent = newText;
     }
-    
 
-    return { test, changeText }
+    return { changeText };
 }
 
 
