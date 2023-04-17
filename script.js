@@ -4,9 +4,17 @@
 
 const testBtn = document.querySelector('.test-btn')
 testBtn.addEventListener('click', (e) => test());
+
+
 function test() {
     const ttt = document.querySelector('.ttt-text');
+    const [tik, tak, toe] = ttt.children;
     toggleActive(ttt);
+    ttt.style.animation = 'fade-in 500ms fowards';
+    tik.style.animationDelay = '2s';
+    tak.style.animationDelay = '4s';
+    toe.style.animationDelay = '6s';
+
 }
 
 function toggleActive(element) {

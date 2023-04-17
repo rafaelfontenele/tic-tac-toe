@@ -59,21 +59,7 @@ main {
     pointer-events: none;
 }
 
-.ttt-text span + active {
-    animation: ttt 1000ms linear;
-    color: orange;
-}
 
-@keyframes ttt {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-        color: orange;
-    }
-}
 
 .ttt-text span  {
     font-family: 'Orbitron', sans-serif;
@@ -85,6 +71,37 @@ main {
     content: '-';
 }
 
+
+@keyframes shake {
+
+
+    25% { transform: translate(10px)}
+    50% { transform: translate(-10px)}
+    75% { transform: translate(10px)}
+    100% { transform: translate(-10px)}
+
+
+}
+
+@keyframes fade-in {
+    0% {
+        opacity:0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+@keyframes fade-out {
+    0% {
+        opacity:1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 
 * button,
 .clickable {
