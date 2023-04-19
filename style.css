@@ -19,7 +19,6 @@ font-family: 'Roboto Slab', serif;
     --red: #ff7070;
     --light-green: #9fff9c;
     --light-red: #ff9c9c;
-    --tiktaktoe-font: 'Orbitron', sans-serif;
 }
 
 
@@ -30,7 +29,8 @@ font-family: 'Roboto Slab', serif;
     box-sizing: border-box;
     font-size: 20px;
     font-weight: 500;
-    font-family: sans-serif;
+    font-family: 'Kanit', sans-serif;
+
 }
 
 body {
@@ -58,11 +58,11 @@ main {
     padding: 2vh 3vh;
     pointer-events: none;
     opacity: 0;
+    transition: opacity 2000ms ease-in-out;
 }
 
 .ttt-text.animate {
-    animation: fade-in 2s linear,
-    fade-out 2s 6s linear;
+    opacity: 1;
 }
 
 
@@ -78,51 +78,32 @@ main {
 }
 
 .ttt-text.animate span:nth-child(1){
-    animation: bubble 1.5s forwards;
+    animation-name: bubble;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
     animation-delay: 1000ms;
 }
 
 
 .ttt-text.animate span:nth-child(2){
-    animation: bubble 1.5s forwards;
-    animation-delay: 3000ms;
+    animation-name: bubble;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-delay: 2000ms;
 }
 
 
 .ttt-text.animate span:nth-child(3){
-    animation: bubble 1.5s forwards;
-    animation-delay: 5000ms;
+    animation-name: bubble;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-delay: 3000ms;
 }
 
 
-@keyframes bubble {
-
-
-    0% {transform: scale(1); opacity:0.4;}
-    50% {transform:scale(1.2);opacity:1;}
-    100% {transform: scale(1);opacity:1}
-
-}
-
-@keyframes fade-in {
-    0% {
-        opacity:0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-
-
-@keyframes fade-out {
-    0% {
-        opacity:1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
 
 * button,
 .clickable {
@@ -141,15 +122,21 @@ main {
     align-items: center;
     padding: 0;
     justify-content: space-between;
+    transition: opacity 2000ms ease-in-out;
 }
 
 .menu .text {
     position: absolute;
-    left: 37%;
-    top: 20%;
-    font-size: 1.5rem;
-    font-weight: 600;
-    transition: all 500ms ease-in-out;
+    font-weight: 300;
+    left: 34%;
+    top: 15%;
+    font-size: 2rem;
+    font-weight: 200;
+    background-color: whitesmoke    ;
+    padding: 2vh 2vw;
+    border: 1px solid rgba(0,0,0,0.7);
+    border-radius: 5px;
+
 }
 
 .menu .right-side,
@@ -179,28 +166,34 @@ main {
     transform: scale(0.95);
 }
 
-.menu button:not(.start-btn):checked {
+.menu button:not(.start-btn).checked {
     background-color: orange;
 }
 
 .menu .start-btn {
     width: 15vw;
     height: 15vh;
-    border: 3px solid black;
-    border-radius: 5px;
+    border: 2px solid black;
+    border-radius: 15%;
     box-shadow: rgb(0, 0, 0) 0px 0px 0px 2px,
      rgb(252, 252, 252) 0px 0px 0px 4px,
       rgb(0, 0, 0) 0px 0px 0px 6px;
-
-}
-.menu .start-btn:hover {
     animation: hoverAnimation 1s infinite;
+
 }
 
 .menu .start-btn:active {
-    background-color: black;
+    background-color: rgba(0,0,0,0.6);
     transform: scale(0.95);
     animation: none;
+}
+
+.menu .start-btn:disabled {
+    background-color:grey;
+    animation: none;
+    box-shadow: none;
+    cursor: not-allowed;
+    border: 2px solid black;
 }
 
 @keyframes hoverAnimation {
@@ -228,7 +221,7 @@ main {
 
 footer {
     position: absolute;
-    bottom: 1%;
+    bottom: 0%;
     right: 45%;
     font-size: 16px;
     width: auto;
@@ -240,7 +233,7 @@ footer {
 
 footer img {
     margin-left: 0.2vw;
-    margin-top: 0.4vh;
+    margin-top: 1vh;
     width: 1.5vw;
     height: auto;
     cursor: pointer;
@@ -272,13 +265,43 @@ footer img:hover {
 .left {
     position: absolute;
     left: 25%;
-    bottom: 50%;
-    transform: translateX(-400px);
+    bottom: 30%;
+    transform: translateX(-40vw);
 }
 
 .right {
     position: absolute;
     right: 25%;
-    bottom: 50%;
-    transform: translateX(400px);
+    bottom: 30%;
+    transform: translateX(40vw);
+}
+
+
+@keyframes bubble {
+
+
+    0% {transform: scale(1); opacity:0.4;}
+    25% {transform: scale(1.2)}
+    50% {opacity:1;}
+    100% {transform: scale(1);opacity:1}
+
+}
+
+@keyframes fade-in {
+    0% {
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+@keyframes fade-out {
+    0% {
+        opacity:1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
