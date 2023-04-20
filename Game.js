@@ -51,19 +51,25 @@ export const Game = (window) => {
     const addClass = (element, cls) => {
         if (!typeof element == HTMLElement || !typeof cls == 'string') return
     
-        if (!element.classList.contains(cls)) element.classList.add(cls);
-        console.log(element.classList)
+        (!element.classList.contains(cls)) ? element.classList.add(cls) : null;
     }
+
     const startGame = () => {
             setTimeout(() => playIntroAnimation(), 1000);
             setTimeout( () => showMenu(), 9500);
     }
     const showMenu = () => {
-        const menu = document.querySelector('.menu');
         removeClass(menu, 'inactive');
+    }
+    const hideMenu = () => {
+        addClass(menu, 'inactive');
     }
 
 
+
+    const playIconAnimation = () => {
+        
+    }
 
 
     const selectPlayer = (event)  => {
@@ -92,25 +98,40 @@ export const Game = (window) => {
 
     }
     const test = () => {
-        alert('tst')
+        addClass(iconWrapper, 'active');
+        setTimeout( () => removeClass(iconWrapper, 'active'), 8000)
     }
 
 
-    const getSelected = () => {
+    const startMatch = (players) => {
         
+        alert(Object.values(players));
+        hideMenu();
+
+    }
+
+    const getSelected = () => {
+        const selected = [...selectPlayerButtons].map(item => item.classList.contains('checked'));
+        [...selectPlayerButtons].forEach( item => item.classList.remove('checked'));
+        const matchPlayers = {p1: selected[0] ? 'player' : 'bot',
+            p2: selected[2] ? 'player' : 'bot'}
+
+
+        startMatch(matchPlayers);
     }
 
     const testBtn = document.querySelector('.test-btn')
-    testBtn.addEventListener('click', (e) => test());
-
+    const menu = document.querySelector('.menu');
     const startButton = document.querySelector('.start-btn');
-    startButton.addEventListener('click', () => getSelected())
     const selectPlayerButtons = document.querySelectorAll('#selectPlayer-btn');
+    const iconWrapper = document.querySelectorAll('.icon-wrapper');
+
+    testBtn.addEventListener('click', (e) => test());
+    startButton.addEventListener('click', () => getSelected());
     [...selectPlayerButtons].forEach(b => {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
     
-    showMenu();
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };
 }

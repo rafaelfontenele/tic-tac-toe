@@ -129,7 +129,7 @@ main {
     position: absolute;
     font-weight: 300;
     left: 34%;
-    top: 15%;
+    top: 10%;
     font-size: 2rem;
     font-weight: 200;
     background-color: whitesmoke    ;
@@ -189,35 +189,12 @@ main {
 }
 
 .menu .start-btn:disabled {
-    background-color:grey;
+    background-color:rgb(60, 59, 59);
     animation: none;
     box-shadow: none;
     cursor: not-allowed;
     border: 2px solid black;
 }
-
-@keyframes hoverAnimation {
-    0% {
-        transform: scale(1);
-        box-shadow: rgb(255, 254, 254) 0px 0px 0px 2px,
-     rgb(0, 0, 0) 0px 0px 0px 4px,
-      rgb(255, 253, 253) 0px 0px 0px 6px;
-    }
-    50% {
-        transform: scale(1.1);
-        box-shadow: rgb(0, 0, 0) 0px 0px 0px 2px,
-     rgb(252, 252, 252) 0px 0px 0px 4px,
-      rgb(0, 0, 0) 0px 0px 0px 6px;
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: rgb(255, 254, 254) 0px 0px 0px 2px,
-     rgb(0, 0, 0) 0px 0px 0px 4px,
-      rgb(255, 253, 253) 0px 0px 0px 6px;
-    }
-}
-
-
 
 footer {
     position: absolute;
@@ -256,24 +233,39 @@ footer img:hover {
     pointer-events: none;
 }
 
+.icon-wrapper {
+    transition: all 300ms ease-in-out;
+}
+
+.icon-wrapper .text {
+    position: absolute;
+    right: 46%;
+    top: 35%;
+    font-size: 6rem;
+    font-weight: 400;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20%;
+}
+
 .icon{
-    width: 200px;
-    height: 200px;
+    width: 30vw;
+    height: 30vh;
     
 }
 
 .left {
     position: absolute;
     left: 25%;
-    bottom: 30%;
-    transform: translateX(-40vw);
+    bottom: 35%;
+    transform: translateX(-20vw);
 }
 
 .right {
     position: absolute;
     right: 25%;
-    bottom: 30%;
-    transform: translateX(40vw);
+    bottom: 35%;
+    transform: translateX(20vw);
 }
 
 
@@ -303,5 +295,25 @@ footer img:hover {
     }
     100% {
         opacity: 0;
+    }
+}
+@keyframes hoverAnimation {
+    0% {
+        transform: scale(1);
+        box-shadow: rgb(255, 254, 254) 0px 0px 0px 2px,
+     rgb(0, 0, 0) 0px 0px 0px 4px,
+      rgb(255, 253, 253) 0px 0px 0px 6px;
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: rgb(0, 0, 0) 0px 0px 0px 2px,
+     rgb(252, 252, 252) 0px 0px 0px 4px,
+      rgb(0, 0, 0) 0px 0px 0px 6px;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: rgb(255, 254, 254) 0px 0px 0px 2px,
+     rgb(0, 0, 0) 0px 0px 0px 4px,
+      rgb(255, 253, 253) 0px 0px 0px 6px;
     }
 }
