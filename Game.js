@@ -1,4 +1,4 @@
-
+import { Board } from './Board.js';
 
 export const Game = (window) => {
 
@@ -43,15 +43,19 @@ export const Game = (window) => {
     }
 
     const removeClass = (element, cls) => {
-        if (!typeof element == HTMLElement || !typeof  cls=='string') return
+        if (!typeof element == Object || !typeof  cls=='string') return
     
-        if (element.classList.contains(cls)) element.classList.remove(cls);
+        if (element.classList.contains(cls)) {
+            element.classList.remove(cls);
+        }
     }
 
     const addClass = (element, cls) => {
-        if (!typeof element == HTMLElement || !typeof cls == 'string') return
+        if (!typeof element == Object || !typeof cls == 'string') return
     
-        (!element.classList.contains(cls)) ? element.classList.add(cls) : null;
+        if (!element.classList.contains(cls)) {
+            element.classList.add(cls);
+        }
     }
 
     const startGame = () => {
@@ -59,16 +63,11 @@ export const Game = (window) => {
             setTimeout( () => showMenu(), 9500);
     }
     const showMenu = () => {
+        [...selectPlayerButtons].forEach( (button) => {removeClass(button, 'checked')});
         removeClass(menu, 'inactive');
     }
     const hideMenu = () => {
         addClass(menu, 'inactive');
-    }
-
-
-
-    const playIconAnimation = () => {
-        
     }
 
 
@@ -98,24 +97,52 @@ export const Game = (window) => {
 
     }
     const test = () => {
-        addClass(iconWrapper, 'active');
-        setTimeout( () => removeClass(iconWrapper, 'active'), 8000)
+        removeClass(iconWrapper, 'inactive');
+
+        playIconAnimation('player', 'bot');
+
+        setTimeout( () => {addClass(iconWrapper, 'inactive')}, 5000);
+    }
+
+    const playIconAnimation = (players) => {
+        const leftIcons = iconWrapper.querySelectorAll('.left');
+        const rightIcons = iconWrapper.querySelectorAll('.right');
+        const p1 = players['p1'];
+        const p2 = players['p2'];
+
+        iconWrapper.classList.remove('inactive');
+        if (p1 == 'player') {
+            leftIcons[0].classList.add('active');
+        } else {
+            leftIcons[1].classList.add('active');
+        }
+        if (p2 == 'player') {
+            rightIcons[0].classList.add('active');
+        } else {
+            rightIcons[1].classList.add('active');
+        }
+
+        setTimeout( () => {
+            addClass(iconWrapper, 'inactive');
+            leftIcons.forEach(icon => removeClass(icon, 'active'));
+            rightIcons.forEach(icon => removeClass(icon, 'active'))
+        }, 5000)
     }
 
 
     const startMatch = (players) => {
-        
-        alert(Object.values(players));
         hideMenu();
-
+        setTimeout( () =>         playIconAnimation(players), 3000)
     }
 
     const getSelected = () => {
+        addClass(startButton, 'checked');
         const selected = [...selectPlayerButtons].map(item => item.classList.contains('checked'));
-        [...selectPlayerButtons].forEach( item => item.classList.remove('checked'));
+        
         const matchPlayers = {p1: selected[0] ? 'player' : 'bot',
             p2: selected[2] ? 'player' : 'bot'}
 
+           //matchPlayers == [p1 = player/bot, p2 = player/bot] 
 
         startMatch(matchPlayers);
     }
@@ -124,14 +151,15 @@ export const Game = (window) => {
     const menu = document.querySelector('.menu');
     const startButton = document.querySelector('.start-btn');
     const selectPlayerButtons = document.querySelectorAll('#selectPlayer-btn');
-    const iconWrapper = document.querySelectorAll('.icon-wrapper');
+    const iconWrapper = document.querySelector('.icon-wrapper');
 
-    testBtn.addEventListener('click', (e) => test());
+    testBtn.addEventListener('click', () => test());
     startButton.addEventListener('click', () => getSelected());
     [...selectPlayerButtons].forEach(b => {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
-    
+
+    startGame();
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };
 }
