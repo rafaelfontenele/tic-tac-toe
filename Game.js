@@ -1,6 +1,8 @@
 import { Board } from './Board.js';
+import { Player } from './Player.js';
 
-export const Game = (window) => {
+
+export const Game = function (window) {
 
     
     const playIntroAnimation = () => {
@@ -97,11 +99,20 @@ export const Game = (window) => {
 
     }
     const test = () => {
-        removeClass(iconWrapper, 'inactive');
+        
+        const game = document.querySelector('.game');
+        removeClass( game, 'inactive');
+        
 
-        playIconAnimation('player', 'bot');
+        const p1 = Player('p1', false);
+        const p2 = Player('p2', false);
+        
+        const b = Board(p1, p2);
+        b.showBoard()
+        
+        b.fillBoard();
 
-        setTimeout( () => {addClass(iconWrapper, 'inactive')}, 5000);
+
     }
 
     const playIconAnimation = (players) => {
@@ -159,7 +170,7 @@ export const Game = (window) => {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
 
-    startGame();
+    
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };
 }

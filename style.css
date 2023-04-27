@@ -278,6 +278,12 @@ footer img:hover {
 }
 
 
+.game {
+
+    transition: all 2000ms ease-in-out;
+    
+}
+
 .display {
     position:absolute;
     width: 50%;
@@ -301,23 +307,30 @@ footer img:hover {
     position: absolute;
     left: 35%;
     top: 25%;
-    gap: 1%;
+    gap: 2%;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     background-color: black;
     padding: 0.5%;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    transition: all 800ms ease-in-out;
 }
 
 .cell {
     cursor: pointer;
+    border-radius: 5%;
     background-color: orange;
-    transition: transform 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+    animation: cellAnimation 400ms;
+
 }
 
 
 .cell:hover {
-    transform: scale(1.02)
+    transform: scale(1.03)
+}
+.cell:active {
+    transform: scale(0.98)
 }
 
 
@@ -340,6 +353,18 @@ footer img:hover {
     0% {
     }
     100% {
+        opacity: 1;
+    }
+}
+
+@keyframes cellAnimation {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
         opacity: 1;
     }
 }
