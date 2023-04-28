@@ -98,22 +98,24 @@ export const Game = function (window) {
     
 
     }
-    const test = () => {
-        
+    const showGame = () => {
         const game = document.querySelector('.game');
-        removeClass( game, 'inactive');
-        
+        removeClass(game, 'inactive');
+    }
+    const test = () => {
 
-        const p1 = Player('p1', false);
-        const p2 = Player('p2', false);
-        
+        showGame();
+
+        const p1 = Player('p1', false, 'red');
+        const p2 = Player('p2', true, 'green');
         const b = Board(p1, p2);
+
         b.showBoard()
-        
+        //setTimeout(() => (b.fillBoard()), 1000);
         b.fillBoard();
 
-
     }
+    test();
 
     const playIconAnimation = (players) => {
         const leftIcons = iconWrapper.querySelectorAll('.left');

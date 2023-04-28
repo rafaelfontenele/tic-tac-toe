@@ -1,6 +1,6 @@
 
 
-export const Player = (name, isBot) => {
+export const Player = (name, isBot, color) => {
     let wins = 5;
     let losses = 0;
     let bot = isBot;
@@ -8,6 +8,7 @@ export const Player = (name, isBot) => {
     const display = () => {
         alert(`Name= ${name}\nWins = ${wins}\nLosses = ${losses}\nBot = ${bot}`);
     }
+
 
     const changeWins = (number) => {
         if (typeof number != 'number') {
@@ -19,8 +20,20 @@ export const Player = (name, isBot) => {
         console.log(`wins = ${wins}`)
     }
 
+    const getIconClasses = () => {
+        let iconClasses = [];
+        if (!bot) {
+            iconClasses.push('player');
+        } else {
+            iconClasses.push('robot');
+        }
+        iconClasses.push(color);
+        
+        return iconClasses
+    }
 
 
 
-    return { name, wins, losses, bot, display, changeWins }
+
+    return { name, wins, losses, bot, display, changeWins, getIconClasses }
 }

@@ -320,10 +320,13 @@ footer img:hover {
     cursor: pointer;
     border-radius: 5%;
     background-color: orange;
-    transition: all 200ms ease-in-out;
+    transition: background-image 500ms ease-in-out;
     animation: cellAnimation 400ms;
-
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
 }
+
 
 
 .cell:hover {
@@ -333,6 +336,18 @@ footer img:hover {
     transform: scale(0.98)
 }
 
+.cell.player.red {
+    background-image: url('./images/et_red.svg');
+}
+.cell.player.green {
+    background-image: url('./images/et_green.svg');
+}
+.cell.robot.red {
+    background-image: url('./images/robot_red.svg');
+}
+.cell.robot.green {
+    background-image: url('./images/robot_green.svg');
+}
 
 
 

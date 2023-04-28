@@ -1,15 +1,23 @@
 import { Player } from './Player.js';
 
 export const Board = function (p1, p2) {
-
+    let leftPlayer = p1;
+    let rightPlayer = p2;
     let currentTurn = p1;
     let boardArr = new Array(9);
-
+    let winningMoves = [
+        [0, 4, 8],
+        [6, 4, 2],
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8]          
+        ]
 
     const board = document.querySelector('.board');
-    
 
-    //boardCells.addEventListener('click', () => alert('click'))
 
     const showBoard = () => {
         if (board.classList.contains('inactive')) {
@@ -18,13 +26,33 @@ export const Board = function (p1, p2) {
 
     }
 
+    const checkWinner = () => {
+
+        for (let i=0;i<winningMoves.length;i++) {
+            let indexes = winningMoves[i];
+            let line = [boardArr[indexes[0]], boardArr[indexes[1]], boardArr[indexes[2]]]
+            if (line.includes(undefined)) return false
+            return line[0];
+        }
+
+    }
+
     const makePlay = (player, cell) => {
         const cellKey = cell.getAttribute('key');
-        cell.style.backgroundColor = 'red';
         boardArr[cellKey] = player;
-        console.log(boardArr);
         
+        cell.classList.add(...player.getIconClasses());
+        
+        changeCurrentTurn();
 
+        let winner = checkWinner();
+
+        if (winner) {
+            alert(winner.name);
+            return
+            //increaseWinnerWins
+            //resetGame
+        }
     }
 
     const handleCellClick = (event) => {
@@ -41,7 +69,6 @@ export const Board = function (p1, p2) {
     }
 
     const appendCell = (i) => {
-        console.log(i);
         const newCell = document.createElement('div');
         newCell.classList.add('cell');
         newCell.setAttribute( 'key', i);
@@ -61,15 +88,18 @@ export const Board = function (p1, p2) {
     }
     
     const getCurrentTurn = () => {
-        alert(currentTurn.name);
+        alert(currentTurn);
     }
 
     const changeCurrentTurn = () => {
+        console.log(currentTurn)
+
         if (currentTurn == p1) {
             currentTurn = p2;
         } else {
             currentTurn = p1;
-        }
+        }        console.log(currentTurn);
+
     }
 
     
