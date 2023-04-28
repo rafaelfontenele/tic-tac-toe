@@ -106,13 +106,15 @@ export const Game = function (window) {
 
         showGame();
 
-        const p1 = Player('p1', false, 'red');
-        const p2 = Player('p2', true, 'green');
+        const p1 = Player('Player', false, 'red');
+        const p2 = Player('BOT', true, 'green');
         const b = Board(p1, p2);
 
         b.showBoard()
         //setTimeout(() => (b.fillBoard()), 1000);
         b.fillBoard();
+
+        b.updateDisplay();
 
     }
     test();

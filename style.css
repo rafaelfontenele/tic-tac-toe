@@ -299,6 +299,66 @@ footer img:hover {
     transition: all 200ms ease-in-out;
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
+
+.display > * {
+    transition: all 500ms ease-in-out;
+}
+
+
+.display .left {
+    background-color: orange;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    top: 15%;
+    left: 82%;
+    width: 20%;
+    height: auto;
+}
+
+.display .right {
+    background-color: orange;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    top: 15%;
+    right: 82%;
+    width: 20%;
+    height: auto;
+}
+
+.display .wins {
+    color:  green;
+}
+
+.display .losses {
+    color: red;
+}
+
+
+.left .i,
+.right .i {
+    grid-row: 1 / -1;
+    background-position: center;
+    background-size: 80%;
+    background-repeat: no-repeat;
+}
+.left > *:not(.i) {
+    text-align: center;
+}
+.right .i {
+    grid-column: 2;
+}
+.right > *:not(.i) {
+    text-align: center;
+}
+.i.player.red {
+    background-image: url('images/et_red.svg');
+}
+
+
 .board {
     display: grid;
     aspect-ratio: 1/1;
@@ -337,18 +397,66 @@ footer img:hover {
 }
 
 .cell.player.red {
-    background-image: url('./images/et_red.svg');
+    animation: playerRed 600ms;
+    animation-fill-mode: forwards;
 }
 .cell.player.green {
-    background-image: url('./images/et_green.svg');
+    animation: playerGreen 600ms;
+    animation-fill-mode: forwards;
 }
 .cell.robot.red {
-    background-image: url('./images/robot_red.svg');
+    animation: robotRed 600ms;
+    animation-fill-mode: forwards;
 }
 .cell.robot.green {
-    background-image: url('./images/robot_green.svg');
+    animation: robotGreen 600ms;
+    animation-fill-mode: forwards;
 }
 
+@keyframes playerRed {
+    0% {
+        background-image: url('images/et_red.svg');
+        background-size: 15%;
+    }
+    
+    100% {
+        background-image: url('images/et_red.svg');
+        background-size: 50%;
+    }
+}
+@keyframes playerGreen {
+    0% {
+        background-image: url('images/et_green.svg');
+        background-size: 15%;
+    }
+    
+    100% {
+        background-image: url('images/et_green.svg');
+        background-size: 50%;
+    }
+}
+@keyframes robotRed {
+    0% {
+        background-image: url('images/robot_red.svg');
+        background-size: 15%;
+    }
+    
+    100% {
+        background-image: url('images/robot_red.svg');
+        background-size: 50%;
+    }
+}
+@keyframes robotGreen {
+    0% {
+        background-image: url('images/robot_green.svg');
+        background-size: 15%;
+    }
+    
+    100% {
+        background-image: url('images/robot_green.svg');
+        background-size: 50%;
+    }
+}
 
 
 

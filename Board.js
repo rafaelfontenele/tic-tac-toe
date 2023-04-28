@@ -38,25 +38,44 @@ export const Board = function (p1, p2) {
     }
 
     const makePlay = (player, cell) => {
+
         const cellKey = cell.getAttribute('key');
         boardArr[cellKey] = player;
+
+        console.log(boardArr);        
+        
         
         cell.classList.add(...player.getIconClasses());
         
         changeCurrentTurn();
 
+
         let winner = checkWinner();
 
         if (winner) {
-            alert(winner.name);
             return
             //increaseWinnerWins
             //resetGame
         }
     }
 
+    const updateDisplay = () => {
+        const display = document.querySelector('.display');
+        const left = display.querySelector('.left');
+        const textDisplay = display.querySelector('.text');
+        const right = display.querySelector('.right');
+
+        const leftChildren = [...left.childNodes].filter(x => x.tagName == 'DIV');
+        
+        leftChildren[0].style.backgroundImage = "url('images/et_red.svg')";
+        console.log(leftChildren)
+    }
+
     const handleCellClick = (event) => {
         const cell = event.target;
+        if (cell.classList.length != 1) {
+            return
+        }
 
         if (currentTurn.isBot) {
             console.log('isBot');
@@ -92,19 +111,18 @@ export const Board = function (p1, p2) {
     }
 
     const changeCurrentTurn = () => {
-        console.log(currentTurn)
 
         if (currentTurn == p1) {
             currentTurn = p2;
         } else {
             currentTurn = p1;
-        }        console.log(currentTurn);
+        }
 
     }
 
     
 
 
-    return {  changeCurrentTurn, getCurrentTurn, showBoard, fillBoard }
+    return {  changeCurrentTurn, getCurrentTurn, showBoard, fillBoard, updateDisplay }
 }
 
