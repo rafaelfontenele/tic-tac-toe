@@ -3,6 +3,8 @@ import { Player } from './Player.js';
 export const Board = function (p1, p2) {
 
     let currentTurn = p1;
+    let boardArr = new Array(9);
+
 
     const board = document.querySelector('.board');
     
@@ -16,10 +18,26 @@ export const Board = function (p1, p2) {
 
     }
 
+    const makePlay = (player, cell) => {
+        const cellKey = cell.getAttribute('key');
+        cell.style.backgroundColor = 'red';
+        boardArr[cellKey] = player;
+        console.log(boardArr);
+        
+
+    }
+
     const handleCellClick = (event) => {
         const cell = event.target;
 
-        console.log(cell.getAttribute('key'));
+        if (currentTurn.isBot) {
+            console.log('isBot');
+            return
+        }
+
+        makePlay(currentTurn, cell);
+
+
     }
 
     const appendCell = (i) => {
@@ -27,6 +45,7 @@ export const Board = function (p1, p2) {
         const newCell = document.createElement('div');
         newCell.classList.add('cell');
         newCell.setAttribute( 'key', i);
+        newCell.innerHTML = i;
         newCell.addEventListener('click', (e) => handleCellClick(e));
         board.appendChild(newCell);
     }
