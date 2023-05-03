@@ -1,7 +1,7 @@
 
 
 export const Player = (name, isBot, color) => {
-    let wins = 5;
+    let wins = 0;
     let losses = 0;
     let bot = isBot;
 
@@ -35,5 +35,5 @@ export const Player = (name, isBot, color) => {
 
 
 
-    return { name, wins, losses, bot, display, changeWins, getIconClasses }
+    return { name, wins, losses, bot, color, display, changeWins, getIconClasses }
 }

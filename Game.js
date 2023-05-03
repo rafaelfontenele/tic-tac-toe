@@ -64,15 +64,8 @@ export const Game = function (window) {
             setTimeout(() => playIntroAnimation(), 1000);
             setTimeout( () => showMenu(), 9500);
     }
-    const showMenu = () => {
-        [...selectPlayerButtons].forEach( (button) => {removeClass(button, 'checked')});
-        removeClass(menu, 'inactive');
-    }
-    const hideMenu = () => {
-        addClass(menu, 'inactive');
-    }
-
-
+    
+    
     const selectPlayer = (event)  => {
         const clickedButton = event.target;
         const value = clickedButton.value;
@@ -83,41 +76,46 @@ export const Game = function (window) {
             selectPlayerButtons[2].classList.remove('checked');
             selectPlayerButtons[3].classList.remove('checked');
         }
-
+        
         clickedButton.classList.add('checked');
-
+        
         const leftSideSelected = selectPlayerButtons[0].classList.contains('checked') || selectPlayerButtons[1].classList.contains('checked')
         const rightSideSelected = selectPlayerButtons[2].classList.contains('checked') || selectPlayerButtons[3].classList.contains('checked')
-
+        
         if (leftSideSelected && rightSideSelected) {
             startButton.disabled = false;
         } else {
             startButton.disabled = true;
         }
-
-    
-
+        
+        
+        
     }
-    const showGame = () => {
+
+
+    const showMenu = () => {
+
+        [...selectPlayerButtons].forEach( (button) => {
+            removeClass(button, 'checked')
+        });
+
+
+        removeClass(menu, 'inactive');
+    }
+    const hideMenu = () => {
+        addClass(menu, 'inactive');
+    }
+
+
+    const showGameDisplay = () => {
         const game = document.querySelector('.game');
         removeClass(game, 'inactive');
     }
     const test = () => {
 
-        showGame();
-
-        const p1 = Player('Player', false, 'red');
-        const p2 = Player('BOT', true, 'green');
-        const b = Board(p1, p2);
-
-        b.showBoard()
-        //setTimeout(() => (b.fillBoard()), 1000);
-        b.fillBoard();
-
-        b.updateDisplay();
+        
 
     }
-    test();
 
     const playIconAnimation = (players) => {
         const leftIcons = iconWrapper.querySelectorAll('.left');
@@ -146,9 +144,38 @@ export const Game = function (window) {
 
 
     const startMatch = (players) => {
-        hideMenu();
-        setTimeout( () =>         playIconAnimation(players), 3000)
+        const player1 = players[0];
+        const player2 = players[1];
+        const p1 = Player(`${player1 == 'player' ? 'P' : 'B'}1`,
+         player1 == 'bot', 'red');
+
+        const p2 = Player(`${player2 == 'player' ? 'P' : 'B'}2`,
+         player2 == 'bot', 'green');
+
+         hideMenu();
+
+         
+        //  setTimeout( () =>         playIconAnimation(players), 3000)
+         
+        //  setTimeout( () =>                 {
+        //      showGameDisplay();
+        //      const b = Board(p1, p2);
+        //      b.showBoard()
+        //      b.updateDisplay();
+        //      b.fillBoard();
+        //     }, 9000) 
+
+
+        
+            showGameDisplay();
+            const b = Board(p1, p2);
+            b.showBoard()
+            b.updateDisplay();
+            b.fillBoard();
+            
+            
     }
+
 
     const getSelected = () => {
         addClass(startButton, 'checked');
@@ -158,7 +185,6 @@ export const Game = function (window) {
             p2: selected[2] ? 'player' : 'bot'}
 
            //matchPlayers == [p1 = player/bot, p2 = player/bot] 
-
         startMatch(matchPlayers);
     }
 
@@ -174,7 +200,8 @@ export const Game = function (window) {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
 
-    
+    startMatch( {p1:'bot', p2: 'player'})
+
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };
 }

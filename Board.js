@@ -5,6 +5,7 @@ export const Board = function (p1, p2) {
     let rightPlayer = p2;
     let currentTurn = p1;
     let boardArr = new Array(9);
+    const maxDelayInMs = 3000;
     let winningMoves = [
         [0, 4, 8],
         [6, 4, 2],
@@ -37,18 +38,17 @@ export const Board = function (p1, p2) {
 
     }
 
-    const makePlay = (player, cell) => {
+    const makePlay = (player, cellIndex) => {
 
-        const cellKey = cell.getAttribute('key');
-        boardArr[cellKey] = player;
-
-        console.log(boardArr);        
-        
+        const boardCells = board.children
+        boardArr[cellIndex] = player;
+        const cell = boardCells[cellIndex];
         
         cell.classList.add(...player.getIconClasses());
         
         changeCurrentTurn();
 
+        updateDisplay();
 
         let winner = checkWinner();
 
@@ -58,6 +58,26 @@ export const Board = function (p1, p2) {
             //resetGame
         }
     }
+    const getIconUrl = (player) => {
+        const type = (player.bot) ? 'robot' : 'et';
+        const color = player.color;
+        const url = `${type}_${color}.svg`
+        return `url("images/${url}")`;
+    }
+
+    const pickRandomEmptyIndex = () => {
+
+        const emptyIndexes = boardArr.filter((n, index) => {
+            if (n === undefined) {
+                return index;
+            }
+        })
+
+        const randomIndex = Math.floor( Math.random * emptyIndexes.length);
+
+        return randomIndex
+
+    }
 
     const updateDisplay = () => {
         const display = document.querySelector('.display');
@@ -65,24 +85,34 @@ export const Board = function (p1, p2) {
         const textDisplay = display.querySelector('.text');
         const right = display.querySelector('.right');
 
-        const leftChildren = [...left.childNodes].filter(x => x.tagName == 'DIV');
+        const [leftIcon, leftWins, leftLosses] = [...left.childNodes].filter(x => x.tagName == 'DIV');
+        const [rightIcon, rightWins, rightLosses] = [...right.childNodes].filter(x => x.tagName == 'DIV');
         
-        leftChildren[0].style.backgroundImage = "url('images/et_red.svg')";
-        console.log(leftChildren)
+        leftIcon.style.backgroundImage = getIconUrl(p1);
+        leftWins.innerHTML = `${p1.wins}`
+        leftLosses.innerHTML = `${p1.losses}`
+
+        textDisplay.textContent = `${currentTurn.name}'s turn...`
+
+        rightIcon.style.backgroundImage = getIconUrl(p2);
+        rightWins.innerHTML = `${p2.wins}`;
+        rightLosses.innerHTML = `${p2.losses}`;
+        
     }
 
     const handleCellClick = (event) => {
         const cell = event.target;
-        if (cell.classList.length != 1) {
-            return
+        const cellKey = cell.getAttribute('key');
+
+        if (boardArr[cellKey] != undefined) {
+            return;
         }
 
         if (currentTurn.isBot) {
-            console.log('isBot');
             return
         }
 
-        makePlay(currentTurn, cell);
+        makePlay(currentTurn, cellKey);
 
 
     }
@@ -106,6 +136,14 @@ export const Board = function (p1, p2) {
         const boardCells = document.querySelectorAll('.cell');
     }
     
+    const handleBotPlay = () => {
+        const chosenPlayIndex = pickRandomEmptyIndex();
+        //const randomPlayDelay = Math.random * maxDelayInMs;
+        const randomPlayDelay = 1500;
+        setTimeout(makePlay, randomPlayDelay, currentTurn, chosenPlayIndex)
+    }
+
+
     const getCurrentTurn = () => {
         alert(currentTurn);
     }
@@ -116,6 +154,10 @@ export const Board = function (p1, p2) {
             currentTurn = p2;
         } else {
             currentTurn = p1;
+        }
+
+        if (currentTurn.bot) {
+            handleBotPlay();
         }
 
     }

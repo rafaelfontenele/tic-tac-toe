@@ -300,41 +300,42 @@ footer img:hover {
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
-.display > * {
-    transition: all 500ms ease-in-out;
-}
-
-
 .display .left {
-    background-color: orange;
     position: absolute;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    top: 15%;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    top: 10%;
     left: 82%;
     width: 20%;
-    height: auto;
+    height: 80%;
 }
 
 .display .right {
-    background-color: orange;
     position: absolute;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    top: 15%;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    top: 10%;
     right: 82%;
     width: 20%;
-    height: auto;
+    height: 80%;
 }
 
 .display .wins {
     color:  green;
+    padding-top: 5%;
+    font-weight: 600;
+    background-color: rgba(255,255,255,0.2);
+    border-top-left-radius: 15%;
+    border-top-right-radius: 15%;
 }
 
 .display .losses {
     color: red;
+    background-color: rgba(255,255,255,0.2);
+    border-bottom-left-radius: 15%;
+    border-bottom-right-radius: 15%;
 }
 
 
@@ -342,7 +343,7 @@ footer img:hover {
 .right .i {
     grid-row: 1 / -1;
     background-position: center;
-    background-size: 80%;
+    background-size: 70%;
     background-repeat: no-repeat;
 }
 .left > *:not(.i) {
@@ -372,6 +373,7 @@ footer img:hover {
     grid-template-rows: repeat(3, 1fr);
     background-color: black;
     padding: 0.5%;
+    border-radius: 3%;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     transition: all 800ms ease-in-out;
 }
