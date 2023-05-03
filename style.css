@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;0,300;0,500;1,600&family=Orbitron:wght@400;500;600;700;800;900&family=Press+Start+2P&family=Roboto+Slab:wght@100;300;500&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
+
 /*
 
 font-family: 'Kanit', sans-serif;
@@ -358,6 +359,60 @@ footer img:hover {
 .i.player.red {
     background-image: url('images/et_red.svg');
 }
+.menu-btn, 
+.restart-btn {
+    opacity: 0.7;
+    border-radius: 10%;
+    padding: inherit;
+    transition: all 200ms ease-in-out;
+      
+
+}
+
+.menu-btn {
+    margin-left: 20%;
+    position: absolute;
+    right: 15%;
+    top: 10%;
+    padding: 0.25% 1%;
+}
+.menu-btn:hover {
+    transform: scale(1.2);
+
+}
+.menu-btn:active {
+    transform: scale(1.2);
+} 
+.restart-btn {
+    position: absolute;
+    right: 10%;
+    top: 10%;
+    background: none;
+    border: none;
+}
+
+.restart-btn i {
+    transform: scale(2.5);
+}
+
+.restart-btn:hover {
+    animation: rotate360 1000ms forwards;
+}
+.restart-btn:active i {
+    transform: scale(2.3);
+}
+
+@keyframes rotate360 {
+    0% {
+        transform:rotate(0deg);
+    }
+    30% {
+        transform:rotate(-120deg);
+    }
+    100% {
+        transform:rotate(480deg);
+    }
+}
 
 
 .board {
@@ -493,6 +548,7 @@ footer img:hover {
         opacity: 1;
     }
 }
+
 
 
 

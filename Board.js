@@ -23,7 +23,7 @@ export const Board = function (p1, p2) {
         
     const board = document.querySelector('.board');
 
-    const handleMenuClick = () => console.log('menuclick');
+    const handleMenuClick = () => alert('menuclick');
 
     const restartGame = () => {console.log('restartclick')};
 
@@ -53,8 +53,21 @@ export const Board = function (p1, p2) {
         return winner
 
     }
+    const getEmptyIndexList = () => {
+        let emptyIndexes = [];
+
+        for (let i=0;i<boardArr.length;i++) {
+            if (boardArr[i] == undefined) {
+                emptyIndexes.push(i);
+            }
+        }
+        return emptyIndexes;
+    }
 
     const makePlay = (player, cellIndex) => {
+        if (gameIsLocked) {
+            return
+        }
 
         if (winner) {
             return
@@ -79,7 +92,13 @@ export const Board = function (p1, p2) {
             //increaseWinnerWins
             //resetGame
         }
+        if (getEmptyIndexList().length == 0) {
+            //handle DRAW
+            //finish game
+            //reset game
     }
+
+    
     const getIconUrl = (player) => {
         const type = (player.bot) ? 'robot' : 'et';
         const color = player.color;
@@ -147,7 +166,7 @@ export const Board = function (p1, p2) {
     
     const handleBot = () => {
 
-        const botPlayIndex = currentTurn.handleBotPlay(boardArr);
+        const botPlayIndex = currentTurn.handleBotPlay(boardArr, getEmptyIndexList());
 
         if (botPlayIndex == -1)  return
 
@@ -169,12 +188,17 @@ export const Board = function (p1, p2) {
         }
 
     }
-    const start = () => {
-        const menuBtn = board.querySelector('.menu-btn');
-        const restartBtn = board.querySelector('.restart-btn');
-        console.log(typeof board)
-        menuBtn.addEventListener('click', handleMenuClick());
 
+    const resetGame = () => {
+        alert('hi')
+    }
+
+
+    const start = () => {
+        const menuBtn = document.querySelector('.menu-btn');
+        const restartBtn = document.querySelector('.restart-btn');
+        menuBtn.addEventListener('click', handleMenuClick);
+        restartBtn.addEventListener('click', resetGame)
 
         showBoard();
         fillBoard();

@@ -19,33 +19,26 @@ export const Player = (name, bot, color) => {
         console.log(`wins = ${wins}`)
     }
 
-    const pickRandomEmptyIndex = (boardArr) => {
+    const pickRandomEmptyIndex = (boardArr, emptyIndexList) => {
 
-        let emptyIndexes = [];
 
-        for (let i=0;i<boardArr.length;i++) {
-            if (boardArr[i] == undefined) {
-                emptyIndexes.push(i);
-            }
-        }
-
-        if (emptyIndexes.length == 0) {
+        if (emptyIndexList.length == 0) {
             return -1;
         }
 
-        const randomIndex = Math.floor(Math.random() * emptyIndexes.length);
+        const randomIndex = Math.floor(Math.random() * emptyIndexList.length);
 
         return emptyIndexes[randomIndex];
     }
 
-    const handleBotPlay = (boardArr) => {
+    const handleBotPlay = (boardArr, emptyIndexList) => {
         //for future implementation, bot play will be handled by 2 funcs:
         // func1 will return a random empty index to be filled in the board
         // func2 will iterate the board and find the best possible move to be made
         // harder bot means less chance of random choice, more chance of best move
         // easier bot means more chance of choice being random, less of targeted choice
 
-        const chosenIndex = pickRandomEmptyIndex(boardArr);
+        const chosenIndex = pickRandomEmptyIndex(boardArr, emptyIndexList);
         return chosenIndex;
             
     }
