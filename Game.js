@@ -144,8 +144,8 @@ export const Game = function (window) {
 
 
     const startMatch = (players) => {
-        const player1 = players[0];
-        const player2 = players[1];
+        const player1 = players['p1'];
+        const player2 = players['p2'];
         const p1 = Player(`${player1 == 'player' ? 'P' : 'B'}1`,
          player1 == 'bot', 'red');
 
@@ -169,9 +169,7 @@ export const Game = function (window) {
         
             showGameDisplay();
             const b = Board(p1, p2);
-            b.showBoard()
-            b.updateDisplay();
-            b.fillBoard();
+            b.start();
             
             
     }
@@ -200,7 +198,7 @@ export const Game = function (window) {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
 
-    startMatch( {p1:'bot', p2: 'player'})
+    startMatch( {p1:'bot', p2: 'bot'})
 
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };

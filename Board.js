@@ -3,9 +3,11 @@ import { Player } from './Player.js';
 export const Board = function (p1, p2) {
     let leftPlayer = p1;
     let rightPlayer = p2;
-    let currentTurn = p1;
     let boardArr = new Array(9);
-    const maxDelayInMs = 3000;
+    const MIN_BOT_DELAY = 1000;
+    const MAX_BOT_DELAY = 2000;
+    let winner; 
+    let currentTurn;
     let winningMoves = [
         [0, 4, 8],
         [6, 4, 2],
@@ -17,8 +19,13 @@ export const Board = function (p1, p2) {
         [2, 5, 8]          
         ]
 
+        
+        
     const board = document.querySelector('.board');
 
+    const handleMenuClick = () => console.log('menuclick');
+
+    const restartGame = () => {console.log('restartclick')};
 
     const showBoard = () => {
         if (board.classList.contains('inactive')) {
@@ -28,31 +35,46 @@ export const Board = function (p1, p2) {
     }
 
     const checkWinner = () => {
+        let winner;
+
 
         for (let i=0;i<winningMoves.length;i++) {
-            let indexes = winningMoves[i];
-            let line = [boardArr[indexes[0]], boardArr[indexes[1]], boardArr[indexes[2]]]
-            if (line.includes(undefined)) return false
-            return line[0];
+            let line = winningMoves[i].map( index => boardArr[index]);
+
+            if (line.includes(undefined)) continue
+
+            if (line[0] === line[1] && line[1] === line[2]) {
+                winner = line[0];
+                
+                return winner
+            }
+
         }
+        return winner
 
     }
 
     const makePlay = (player, cellIndex) => {
 
+        if (winner) {
+            return
+        }
+
         const boardCells = board.children
         boardArr[cellIndex] = player;
         const cell = boardCells[cellIndex];
-        
         cell.classList.add(...player.getIconClasses());
         
         changeCurrentTurn();
 
         updateDisplay();
 
-        let winner = checkWinner();
-
+        winner = checkWinner();
         if (winner) {
+            document.querySelector('.display')
+                .querySelector('.text').textContent = `${winner.name} WON!`
+            winner.wins += 1;
+            updateDisplay()
             return
             //increaseWinnerWins
             //resetGame
@@ -65,19 +87,6 @@ export const Board = function (p1, p2) {
         return `url("images/${url}")`;
     }
 
-    const pickRandomEmptyIndex = () => {
-
-        const emptyIndexes = boardArr.filter((n, index) => {
-            if (n === undefined) {
-                return index;
-            }
-        })
-
-        const randomIndex = Math.floor( Math.random * emptyIndexes.length);
-
-        return randomIndex
-
-    }
 
     const updateDisplay = () => {
         const display = document.querySelector('.display');
@@ -103,15 +112,15 @@ export const Board = function (p1, p2) {
     const handleCellClick = (event) => {
         const cell = event.target;
         const cellKey = cell.getAttribute('key');
-
+        
         if (boardArr[cellKey] != undefined) {
             return;
         }
-
-        if (currentTurn.isBot) {
+        
+        if (currentTurn.bot) {
             return
         }
-
+        
         makePlay(currentTurn, cellKey);
 
 
@@ -136,16 +145,14 @@ export const Board = function (p1, p2) {
         const boardCells = document.querySelectorAll('.cell');
     }
     
-    const handleBotPlay = () => {
-        const chosenPlayIndex = pickRandomEmptyIndex();
-        //const randomPlayDelay = Math.random * maxDelayInMs;
-        const randomPlayDelay = 1500;
-        setTimeout(makePlay, randomPlayDelay, currentTurn, chosenPlayIndex)
-    }
+    const handleBot = () => {
 
+        const botPlayIndex = currentTurn.handleBotPlay(boardArr);
 
-    const getCurrentTurn = () => {
-        alert(currentTurn);
+        if (botPlayIndex == -1)  return
+
+        const delay = MIN_BOT_DELAY + (Math.random() * (MAX_BOT_DELAY - MIN_BOT_DELAY));
+        setTimeout(makePlay, delay, currentTurn, botPlayIndex);
     }
 
     const changeCurrentTurn = () => {
@@ -157,14 +164,35 @@ export const Board = function (p1, p2) {
         }
 
         if (currentTurn.bot) {
-            handleBotPlay();
+            handleBot();
+
         }
 
     }
+    const start = () => {
+        const menuBtn = board.querySelector('.menu-btn');
+        const restartBtn = board.querySelector('.restart-btn');
+        console.log(typeof board)
+        menuBtn.addEventListener('click', handleMenuClick());
 
-    
+
+        showBoard();
+        fillBoard();
+        
+        
+        currentTurn = p1;
+        updateDisplay();
+        
+        if (p1.bot) {
+            handleBot();
+        }
+        
+    }
 
 
-    return {  changeCurrentTurn, getCurrentTurn, showBoard, fillBoard, updateDisplay }
+
+
+    return {  changeCurrentTurn, showBoard,
+         fillBoard, updateDisplay, start }
 }
 

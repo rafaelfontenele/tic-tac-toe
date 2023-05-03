@@ -296,7 +296,7 @@ footer img:hover {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    transition: all 200ms ease-in-out;
+    transition: all 500ms ease-in-out;
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
