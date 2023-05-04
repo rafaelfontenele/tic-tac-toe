@@ -1,25 +1,20 @@
 
 
 export const Player = (name, bot, color) => {
-    let wins = 3;
+    let wins = 0;
     let losses = 0;
 
     const display = () => {
         alert(`Name= ${name}\nWins = ${wins}\nLosses = ${losses}\nBot = ${bot}`);
     }
 
-    const resetStats = () => {
-        wins = 0;
-        losses = 0;
-    }
+    
     const changeWins = (number) => {
         if (typeof number != 'number') {
             return
         }
 
-        console.log(`prev = ${wins}`)
         wins = wins + number;
-        console.log(`wins = ${wins}`)
     }
 
     const pickRandomEmptyIndex = (boardArr, emptyIndexList) => {
@@ -63,5 +58,5 @@ export const Player = (name, bot, color) => {
 
 
     return { name, wins, losses, bot, color, display, changeWins, handleBotPlay,
-         getIconClasses, resetStats }
+         getIconClasses }
 }

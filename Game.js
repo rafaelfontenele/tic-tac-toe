@@ -111,10 +111,10 @@ export const Game = function (window) {
         const game = document.querySelector('.game');
         removeClass(game, 'inactive');
     }
-    const test = () => {
-
-        
-
+    
+    const hideGameDisplay = () => {
+        const game = document.querySelector('.game');
+        addClass(game, 'inactive'); 
     }
 
     const playIconAnimation = (players) => {
@@ -142,33 +142,35 @@ export const Game = function (window) {
         }, 5000)
     }
 
+    const replayMenuSelection = () => {
+        hideGameDisplay();        
+        setTimeout(showMenu, 2000);
+    }
 
     const startMatch = (players) => {
         const player1 = players['p1'];
         const player2 = players['p2'];
-        const p1 = Player(`${player1 == 'player' ? 'P' : 'B'}1`,
+        const p1 = Player(`${player1 == 'player' ? 'Red Player' : 'Red Bot'}`,
          player1 == 'bot', 'red');
 
-        const p2 = Player(`${player2 == 'player' ? 'P' : 'B'}2`,
+        const p2 = Player(`${player2 == 'player' ? 'Green Player' : 'Green Bot'}`,
          player2 == 'bot', 'green');
 
          hideMenu();
 
          
-        //  setTimeout( () =>         playIconAnimation(players), 3000)
-         
-        //  setTimeout( () =>                 {
-        //      showGameDisplay();
-        //      const b = Board(p1, p2);
-        //      b.showBoard()
-        //      b.updateDisplay();
-        //      b.fillBoard();
-        //     }, 9000) 
+        // setTimeout( () =>         playIconAnimation(players), 3000)
+        
+        // setTimeout( () =>                 {
+        //     showGameDisplay();
+        //     const b = Board(p1, p2, replayMenuSelection);
+        //     b.start();
+        //    }, 9000) 
 
 
         
             showGameDisplay();
-            const b = Board(p1, p2, this);
+            const b = Board(p1, p2, replayMenuSelection);
             b.start();
             
             
@@ -197,7 +199,10 @@ export const Game = function (window) {
     [...selectPlayerButtons].forEach(b => {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
-
+    
+    //startGame();
+    //showMenu();    
+    
     startMatch( {p1:'player', p2: 'player'})
 
 

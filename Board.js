@@ -1,6 +1,6 @@
 import { Player } from './Player.js';
 
-export const Board = function (p1, p2, game) {
+export const Board = function (p1, p2, replayMenuSelection) {
     let gameIsLocked = false;
     let boardArr = new Array(9);
     const MIN_BOT_DELAY = 1000;
@@ -20,25 +20,30 @@ export const Board = function (p1, p2, game) {
         ]
 
         
-        
     const board = document.querySelector('.board');
+    const textDisplay = document.querySelector('.display').querySelector('.text');
 
     const handleMenuClick = () => {
-        resetGame();
+        resetGame(true);
+        replayMenuSelection();        
     };
-    const handleResetClick = () => resetGame();
+    const handleResetClick = () => resetGame(true);
 
     const resetGame = (resetStats = false) => {
         lockGame()
         boardArr = new Array(9);
-        
-        p1.resetStats();
-        p2.resetStats();
-       
+
+        if (resetStats) {
+            p1.wins = 0;
+            p2.wins = 0;
+            p1.losses = 0;
+            p2.losses = 0;
+        }
 
         while (board.firstChild) {
             board.removeChild(board.firstChild);
         }
+
         
         start();
     }
@@ -51,25 +56,7 @@ export const Board = function (p1, p2, game) {
 
     }
 
-    const checkWinner = () => {
-        let winner;
-
-
-        for (let i=0;i<winningMoves.length;i++) {
-            let line = winningMoves[i].map( index => boardArr[index]);
-
-            if (line.includes(undefined)) continue
-
-            if (line[0] === line[1] && line[1] === line[2]) {
-                winner = line[0];
-                
-                return winner
-            }
-
-        }
-        return winner
-
-    }
+    
     const getEmptyIndexList = () => {
         let emptyIndexes = [];
 
@@ -80,10 +67,17 @@ export const Board = function (p1, p2, game) {
         }
         return emptyIndexes;
     }
+    const animateWinningLine = (indexes) => {
+        for (let i=0;i<indexes.length;i++) {
+            let currentCell = board.children[indexes[i]];
+            currentCell.classList.add('animate');
+        }
+    }
 
-    const handleWinner = (winner) => {
+    const handleWinner = (winner, indexes) => {
         winner.wins += 1;
         (winner == p1) ? p2.losses+=1 : p1.losses+=1;
+        animateWinningLine(indexes);
         updateDisplay(`${winner.name} WINS!`)
         setTimeout( resetGame, GAME_RESET_TRANSITION_DELAY)
 
@@ -94,8 +88,27 @@ export const Board = function (p1, p2, game) {
         setTimeout( resetGame, GAME_RESET_TRANSITION_DELAY)
     }
 
-    const makePlay = (player, cellIndex) => {
+    const checkWinner = () => {
+        let winner;
+        let winningLine;
 
+        for (let i=0;i<winningMoves.length;i++) {
+            let line = winningMoves[i].map( index => boardArr[index]);
+
+            if (line.includes(undefined)) continue
+
+            if (line[0] === line[1] && line[1] === line[2]) {
+                winner = line[0];
+                winningLine = winningMoves[i];
+                break
+            }
+
+        }
+        return [winner, winningLine]
+    }
+
+    const makePlay = (player, cellIndex) => {
+        
         if (winner) {
             return
         }
@@ -109,11 +122,17 @@ export const Board = function (p1, p2, game) {
 
         updateDisplay();
 
-        winner = checkWinner();
+        let indexes;
+        [winner, indexes] = checkWinner();
 
-        if (winner) handleWinner(winner);
+        let draw = (getEmptyIndexList().length == 0)
 
-        if (getEmptyIndexList().length == 0) handleDraw();
+        if (winner) {
+            handleWinner(winner, indexes);
+            return
+        }
+
+        if (draw) {handleDraw()};
 
 
         
@@ -125,6 +144,9 @@ export const Board = function (p1, p2, game) {
         const url = `${type}_${color}.svg`
         return `url("images/${url}")`;
     }
+
+    const addTextDisplayAnimation = () => {textDisplay.classList.add('animate')}
+    const removeTextDisplayAnimation = () => {textDisplay.classList.remove('animate')}
 
 
     const updateDisplay = (text = undefined) => {
@@ -144,8 +166,7 @@ export const Board = function (p1, p2, game) {
             textDisplay.textContent = `${currentTurn.name}'s turn...`
         } else {
             textDisplay.textContent = text;
-            textDisplay.classList.add('animate');
-            setTimeout(textDisplay.classList.remove, GAME_RESET_TRANSITION_DELAY, 'animate')
+            addTextDisplayAnimation()
         }
 
         rightIcon.style.backgroundImage = getIconUrl(p2);
@@ -227,6 +248,7 @@ export const Board = function (p1, p2, game) {
     const start = () => {
         const menuBtn = document.querySelector('.menu-btn');
         const resetBtn = document.querySelector('.restart-btn');
+        removeTextDisplayAnimation();
 
 
         menuBtn.addEventListener('click', handleMenuClick);
