@@ -339,6 +339,16 @@ footer img:hover {
     border-bottom-right-radius: 15%;
 }
 
+.display .text {
+    font-size: 1rem;
+    transition: all 300ms ease-in-out;
+}
+
+.display .text.animate {
+    background: rgba(255,165,0,0.8);
+    padding: 1% 2%;
+    animation: hoverAnimation 1s infinite;
+}
 
 .left .i,
 .right .i {
@@ -387,8 +397,8 @@ footer img:hover {
     position: absolute;
     right: 10%;
     top: 10%;
-    background: orange;
     border: none;
+    background: none;
 }
 
 .restart-btn i {

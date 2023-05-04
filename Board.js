@@ -5,6 +5,7 @@ export const Board = function (p1, p2, game) {
     let boardArr = new Array(9);
     const MIN_BOT_DELAY = 1000;
     const MAX_BOT_DELAY = 2000;
+    const GAME_RESET_TRANSITION_DELAY = 3000;
     let winner; 
     let currentTurn;
     let winningMoves = [
@@ -23,14 +24,26 @@ export const Board = function (p1, p2, game) {
     const board = document.querySelector('.board');
 
     const handleMenuClick = () => {
-        gameIsLocked = true;
         resetGame();
-        //closeBoard
-        super.addClass(game, 'inactive');
-        super.showMenu();
     };
+    const handleResetClick = () => resetGame();
 
+    const resetGame = (resetStats = false) => {
+        lockGame()
+        boardArr = new Array(9);
+        
+        p1.resetStats();
+        p2.resetStats();
+       
 
+        while (board.firstChild) {
+            board.removeChild(board.firstChild);
+        }
+        
+        start();
+    }
+
+    
     const showBoard = () => {
         if (board.classList.contains('inactive')) {
             board.classList.remove('inactive');
@@ -68,10 +81,20 @@ export const Board = function (p1, p2, game) {
         return emptyIndexes;
     }
 
+    const handleWinner = (winner) => {
+        winner.wins += 1;
+        (winner == p1) ? p2.losses+=1 : p1.losses+=1;
+        updateDisplay(`${winner.name} WINS!`)
+        setTimeout( resetGame, GAME_RESET_TRANSITION_DELAY)
+
+    }
+    const handleDraw = () => {
+        lockGame();
+        updateDisplay('Its a DRAW!');
+        setTimeout( resetGame, GAME_RESET_TRANSITION_DELAY)
+    }
+
     const makePlay = (player, cellIndex) => {
-        if (gameIsLocked) {
-            return
-        }
 
         if (winner) {
             return
@@ -87,21 +110,13 @@ export const Board = function (p1, p2, game) {
         updateDisplay();
 
         winner = checkWinner();
-        if (winner) {
-            console.log(winner);
-            document.querySelector('.display')
-                .querySelector('.text').textContent = `${winner.name} WON!`
-            winner.wins += 1;
-            updateDisplay()
-            return
-            //increaseWinnerWins
-            //resetGame
-        }
-        if (getEmptyIndexList().length == 0) {
-            //handle DRAW
-            //finish game
-            //reset game
-    }
+
+        if (winner) handleWinner(winner);
+
+        if (getEmptyIndexList().length == 0) handleDraw();
+
+
+        
     }
 
     const getIconUrl = (player) => {
@@ -112,7 +127,7 @@ export const Board = function (p1, p2, game) {
     }
 
 
-    const updateDisplay = () => {
+    const updateDisplay = (text = undefined) => {
         const display = document.querySelector('.display');
         const left = display.querySelector('.left');
         const textDisplay = display.querySelector('.text');
@@ -125,7 +140,13 @@ export const Board = function (p1, p2, game) {
         leftWins.innerHTML = `${p1.wins}`
         leftLosses.innerHTML = `${p1.losses}`
 
-        textDisplay.textContent = `${currentTurn.name}'s turn...`
+        if (text == undefined) {
+            textDisplay.textContent = `${currentTurn.name}'s turn...`
+        } else {
+            textDisplay.textContent = text;
+            textDisplay.classList.add('animate');
+            setTimeout(textDisplay.classList.remove, GAME_RESET_TRANSITION_DELAY, 'animate')
+        }
 
         rightIcon.style.backgroundImage = getIconUrl(p2);
         rightWins.innerHTML = `${p2.wins}`;
@@ -134,6 +155,11 @@ export const Board = function (p1, p2, game) {
     }
 
     const handleCellClick = (event) => {
+
+        if (gameIsLocked) {
+            return
+        }
+
         const cell = event.target;
         const cellKey = cell.getAttribute('key');
         
@@ -149,24 +175,28 @@ export const Board = function (p1, p2, game) {
 
 
     }
+    const lockGame = () => {if (!gameIsLocked) gameIsLocked = true};
+    const unlockGame = () => {if (gameIsLocked) gameIsLocked = false};
+
+
 
     const appendCell = (i) => {
+        if ([...board.children].length >= 9) return
         const newCell = document.createElement('div');
         newCell.classList.add('cell');
         newCell.setAttribute( 'key', i);
         newCell.innerHTML = i;
         newCell.addEventListener('click', (e) => handleCellClick(e));
-        board.appendChild(newCell);
+        board.appendChild(newCell)
     }
     const fillBoard = () => {
         
         for (let i=0; i<9; i++) {
-
             setTimeout(appendCell, 150 * i, i);
-
         }            
 
         const boardCells = document.querySelectorAll('.cell');
+        //setTimeout(unlockGame, GAME_RESET_TRANSITION_DELAY);
     }
     
     const handleBot = () => {
@@ -194,32 +224,30 @@ export const Board = function (p1, p2, game) {
 
     }
 
-    const resetGame = () => {
-        alert('restart')
-    }
-
-
     const start = () => {
         const menuBtn = document.querySelector('.menu-btn');
         const resetBtn = document.querySelector('.restart-btn');
 
 
         menuBtn.addEventListener('click', handleMenuClick);
-        resetBtn.addEventListener('click', resetGame)
+        resetBtn.addEventListener('click', handleResetClick)
 
         showBoard();
         fillBoard();
         
-        
+        winner = undefined;
         currentTurn = p1;
         updateDisplay();
-        
+
+        if (gameIsLocked) {
+            unlockGame();
+        }
+
         if (p1.bot) {
             handleBot();
         }
         
     }
-
 
 
 

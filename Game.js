@@ -3,7 +3,7 @@ import { Player } from './Player.js';
 
 
 export const Game = function (window) {
-
+    const hello = () => alert('hello');
     
     const playIntroAnimation = () => {
         const ttt = document.querySelector('.ttt-text');
@@ -198,7 +198,7 @@ export const Game = function (window) {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
 
-    startMatch( {p1:'bot', p2: 'bot'})
+    startMatch( {p1:'player', p2: 'player'})
 
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };
