@@ -168,7 +168,7 @@ export const Game = function (window) {
 
         
             showGameDisplay();
-            const b = Board(p1, p2);
+            const b = Board(p1, p2, this);
             b.start();
             
             

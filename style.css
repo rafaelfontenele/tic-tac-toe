@@ -387,7 +387,7 @@ footer img:hover {
     position: absolute;
     right: 10%;
     top: 10%;
-    background: none;
+    background: orange;
     border: none;
 }
 

@@ -28,7 +28,7 @@ export const Player = (name, bot, color) => {
 
         const randomIndex = Math.floor(Math.random() * emptyIndexList.length);
 
-        return emptyIndexes[randomIndex];
+        return emptyIndexList[randomIndex];
     }
 
     const handleBotPlay = (boardArr, emptyIndexList) => {

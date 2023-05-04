@@ -1,8 +1,7 @@
 import { Player } from './Player.js';
 
-export const Board = function (p1, p2) {
-    let leftPlayer = p1;
-    let rightPlayer = p2;
+export const Board = function (p1, p2, game) {
+    let gameIsLocked = false;
     let boardArr = new Array(9);
     const MIN_BOT_DELAY = 1000;
     const MAX_BOT_DELAY = 2000;
@@ -23,9 +22,14 @@ export const Board = function (p1, p2) {
         
     const board = document.querySelector('.board');
 
-    const handleMenuClick = () => alert('menuclick');
+    const handleMenuClick = () => {
+        gameIsLocked = true;
+        resetGame();
+        //closeBoard
+        super.addClass(game, 'inactive');
+        super.showMenu();
+    };
 
-    const restartGame = () => {console.log('restartclick')};
 
     const showBoard = () => {
         if (board.classList.contains('inactive')) {
@@ -84,6 +88,7 @@ export const Board = function (p1, p2) {
 
         winner = checkWinner();
         if (winner) {
+            console.log(winner);
             document.querySelector('.display')
                 .querySelector('.text').textContent = `${winner.name} WON!`
             winner.wins += 1;
@@ -97,8 +102,8 @@ export const Board = function (p1, p2) {
             //finish game
             //reset game
     }
+    }
 
-    
     const getIconUrl = (player) => {
         const type = (player.bot) ? 'robot' : 'et';
         const color = player.color;
@@ -190,15 +195,17 @@ export const Board = function (p1, p2) {
     }
 
     const resetGame = () => {
-        alert('hi')
+        alert('restart')
     }
 
 
     const start = () => {
         const menuBtn = document.querySelector('.menu-btn');
-        const restartBtn = document.querySelector('.restart-btn');
+        const resetBtn = document.querySelector('.restart-btn');
+
+
         menuBtn.addEventListener('click', handleMenuClick);
-        restartBtn.addEventListener('click', resetGame)
+        resetBtn.addEventListener('click', resetGame)
 
         showBoard();
         fillBoard();
