@@ -20,6 +20,9 @@ font-family: 'Roboto Slab', serif;
     --red: #ff7070;
     --light-green: #9fff9c;
     --light-red: #ff9c9c;
+    --medium-red: #ee6565;
+    --medium-green: rgb(111, 250, 106);
+
 }
 
 
@@ -456,7 +459,7 @@ footer img:hover {
     cursor: pointer;
     border-radius: 5%;
     background-color: orange;
-    transition: background-image 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
     animation: cellAnimation 400ms;
     background-repeat: no-repeat;
     background-size: 50%;
@@ -464,14 +467,16 @@ footer img:hover {
 }
 
 
-.cell.animate {
-    background-color: red;
-    animation-duration: 3s;
-    animation-name: winner;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;}
+.cell.redWinner {
+    background-color: var(--medium-red);
+    border-radius: 10%;
+}
 
 
+.cell.greenWinner {
+    background-color: var(--medium-green);
+    border-radius: 10%;
+}
 
 .cell:hover {
     transform: scale(1.03)

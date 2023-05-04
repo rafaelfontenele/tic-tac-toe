@@ -67,17 +67,17 @@ export const Board = function (p1, p2, replayMenuSelection) {
         }
         return emptyIndexes;
     }
-    const animateWinningLine = (indexes) => {
+    const animateWinningLine = (indexes, color) => {
         for (let i=0;i<indexes.length;i++) {
             let currentCell = board.children[indexes[i]];
-            currentCell.classList.add('animate');
+            currentCell.classList.add(`${color}Winner`);
         }
     }
 
     const handleWinner = (winner, indexes) => {
         winner.wins += 1;
         (winner == p1) ? p2.losses+=1 : p1.losses+=1;
-        animateWinningLine(indexes);
+        animateWinningLine(indexes, (winner == p1) ? 'red' : 'green');
         updateDisplay(`${winner.name} WINS!`)
         setTimeout( resetGame, GAME_RESET_TRANSITION_DELAY)
 
