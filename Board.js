@@ -2,6 +2,7 @@ import { Player } from './Player.js';
 
 export const Board = function (p1, p2, replayMenuSelection) {
     let gameIsLocked = false;
+    let resetIsLocked = false;
     let boardArr = new Array(9);
     const MIN_BOT_DELAY = 1000;
     const MAX_BOT_DELAY = 2000;
@@ -27,10 +28,22 @@ export const Board = function (p1, p2, replayMenuSelection) {
         resetGame(true);
         replayMenuSelection();        
     };
-    const handleResetClick = () => resetGame(true);
+
+    const handleResetClick = () => {
+
+        if (resetIsLocked) return; console.log(resetIsLocked)
+
+        resetGame(true)
+    };
 
     const resetGame = (resetStats = false) => {
-        lockGame()
+
+        lockReset();
+        lockGame();
+
+        while (board.firstChild) {
+            board.removeChild(board.firstChild);
+        }
         boardArr = new Array(9);
 
         if (resetStats) {
@@ -40,9 +53,6 @@ export const Board = function (p1, p2, replayMenuSelection) {
             p2.losses = 0;
         }
 
-        while (board.firstChild) {
-            board.removeChild(board.firstChild);
-        }
 
         
         start();
@@ -198,24 +208,28 @@ export const Board = function (p1, p2, replayMenuSelection) {
     }
     const lockGame = () => {if (!gameIsLocked) gameIsLocked = true};
     const unlockGame = () => {if (gameIsLocked) gameIsLocked = false};
-
+    const lockReset = () => {if (!resetIsLocked) resetIsLocked = true};
+    const unlockReset = () => {if (resetIsLocked) resetIsLocked = false}
 
 
     const appendCell = (i) => {
         if ([...board.children].length >= 9) return
         const newCell = document.createElement('div');
         newCell.classList.add('cell');
-        newCell.setAttribute( 'key', i);
         newCell.innerHTML = i;
+        newCell.setAttribute('key', i);
         newCell.addEventListener('click', (e) => handleCellClick(e));
         board.appendChild(newCell)
     }
+    
     const fillBoard = () => {
         
         for (let i=0; i<9; i++) {
             setTimeout(appendCell, 150 * i, i);
-        }            
+        }   
 
+            
+        
         const boardCells = document.querySelectorAll('.cell');
         //setTimeout(unlockGame, GAME_RESET_TRANSITION_DELAY);
     }
@@ -261,9 +275,8 @@ export const Board = function (p1, p2, replayMenuSelection) {
         currentTurn = p1;
         updateDisplay();
 
-        if (gameIsLocked) {
-            unlockGame();
-        }
+        unlockGame();
+        setTimeout(unlockReset, 3500);
 
         if (p1.bot) {
             handleBot();

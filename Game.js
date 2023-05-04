@@ -194,16 +194,15 @@ export const Game = function (window) {
     const selectPlayerButtons = document.querySelectorAll('#selectPlayer-btn');
     const iconWrapper = document.querySelector('.icon-wrapper');
 
-    testBtn.addEventListener('click', () => test());
     startButton.addEventListener('click', () => getSelected());
     [...selectPlayerButtons].forEach(b => {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
     
-    //startGame();
-    //showMenu();    
+    //showMenu();
+
+    startMatch({'p1': 'player', 'p2':'player'});
     
-    startMatch( {p1:'player', p2: 'player'})
 
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };
