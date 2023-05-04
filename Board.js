@@ -31,7 +31,7 @@ export const Board = function (p1, p2, replayMenuSelection) {
 
     const handleResetClick = () => {
 
-        if (resetIsLocked) return; console.log(resetIsLocked)
+        if (resetIsLocked) return;
 
         resetGame(true)
     };
@@ -40,6 +40,7 @@ export const Board = function (p1, p2, replayMenuSelection) {
 
         lockReset();
         lockGame();
+        console.log(gameIsLocked)
 
         while (board.firstChild) {
             board.removeChild(board.firstChild);
@@ -119,7 +120,7 @@ export const Board = function (p1, p2, replayMenuSelection) {
 
     const makePlay = (player, cellIndex) => {
         
-        if (winner) {
+        if (winner || gameIsLocked) {
             return
         }
 
@@ -128,22 +129,22 @@ export const Board = function (p1, p2, replayMenuSelection) {
         const cell = boardCells[cellIndex];
         cell.classList.add(...player.getIconClasses());
         
-        changeCurrentTurn();
-
+        
         updateDisplay();
-
+        
         let indexes;
         [winner, indexes] = checkWinner();
-
+        
         let draw = (getEmptyIndexList().length == 0)
-
+        
         if (winner) {
             handleWinner(winner, indexes);
             return
         }
-
+        
         if (draw) {handleDraw()};
-
+        
+        changeCurrentTurn();
 
         
     }
@@ -216,7 +217,7 @@ export const Board = function (p1, p2, replayMenuSelection) {
         if ([...board.children].length >= 9) return
         const newCell = document.createElement('div');
         newCell.classList.add('cell');
-        newCell.innerHTML = i;
+        //newCell.innerHTML = i;
         newCell.setAttribute('key', i);
         newCell.addEventListener('click', (e) => handleCellClick(e));
         board.appendChild(newCell)

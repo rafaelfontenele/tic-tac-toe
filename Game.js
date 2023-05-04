@@ -170,7 +170,7 @@ export const Game = function (window) {
 
         
             showGameDisplay();
-            const b = Board(p1, p2, replayMenuSelection);
+            let b = new Board(p1, p2, replayMenuSelection);
             b.start();
             
             
@@ -201,8 +201,9 @@ export const Game = function (window) {
     
     //showMenu();
 
-    startMatch({'p1': 'player', 'p2':'player'});
+    //startMatch({'p1': 'player', 'p2':'player'});
     
+    startMatch({'p1': 'bot', 'p2':'bot'});
 
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };
