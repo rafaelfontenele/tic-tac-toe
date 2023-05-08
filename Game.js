@@ -62,7 +62,7 @@ export const Game = function (window) {
 
     const startGame = () => {
             setTimeout(() => playIntroAnimation(), 1000);
-            setTimeout( () => showMenu(), 9500);
+            //setTimeout( () => showMenu(), 9500);
     }
     
     
@@ -202,6 +202,7 @@ export const Game = function (window) {
     
 
     startGame();
+    
     //showMenu();
 
     //startMatch({'p1': 'player', 'p2':'player'});
