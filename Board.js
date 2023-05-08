@@ -40,7 +40,6 @@ export const Board = function (p1, p2, replayMenuSelection) {
 
         lockReset();
         lockGame();
-        console.log(gameIsLocked)
 
         while (board.firstChild) {
             board.removeChild(board.firstChild);
@@ -259,6 +258,16 @@ export const Board = function (p1, p2, replayMenuSelection) {
         }
 
     }
+    const getFirstToPlay = () => {
+        if (p1.bot && p2.bot) {
+            const randomChoice = Math.random();
+            return (randomChoice < 0.5) ? p1 : p2;
+        }
+
+        return p1
+
+    }
+
 
     const start = () => {
         const menuBtn = document.querySelector('.menu-btn');
@@ -273,14 +282,14 @@ export const Board = function (p1, p2, replayMenuSelection) {
         fillBoard();
         
         winner = undefined;
-        currentTurn = p1;
+        currentTurn = getFirstToPlay();
         updateDisplay();
 
         unlockGame();
         setTimeout(unlockReset, 3500);
 
         if (p1.bot) {
-            handleBot();
+            setTimeout(handleBot, 1000)
         }
         
     }
