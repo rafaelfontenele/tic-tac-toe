@@ -159,19 +159,20 @@ export const Game = function (window) {
          hideMenu();
 
          
-        // setTimeout( () =>         playIconAnimation(players), 3000)
+        setTimeout( () =>         playIconAnimation(players), 3000)
         
-        // setTimeout( () =>                 {
-        //     showGameDisplay();
-        //     const b = Board(p1, p2, replayMenuSelection);
-        //     b.start();
-        //    }, 9000) 
-
-
-        
+        setTimeout( () =>                 {
             showGameDisplay();
-            let b = new Board(p1, p2, replayMenuSelection);
+            const b = Board(p1, p2, replayMenuSelection);
             b.start();
+           }, 9000) 
+
+           const menuBtn = document.querySelector('.menu-btn');
+
+        
+            // showGameDisplay();
+            // let b = new Board(p1, p2, replayMenuSelection);
+            // b.start();
             
             
     }
@@ -199,11 +200,13 @@ export const Game = function (window) {
         b.addEventListener('click', (event) => selectPlayer(event));
     })
     
+
+    startGame();
     //showMenu();
 
     //startMatch({'p1': 'player', 'p2':'player'});
     
-    startMatch({'p1': 'bot', 'p2':'bot'});
+    //startMatch({'p1': 'bot', 'p2':'bot'});
 
 
     return { changeText, playIntroAnimation, toggleActive, removeClass, addClass };
